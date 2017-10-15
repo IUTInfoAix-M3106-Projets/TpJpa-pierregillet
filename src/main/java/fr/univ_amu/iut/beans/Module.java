@@ -1,125 +1,147 @@
 package fr.univ_amu.iut.beans;
 
+import javax.persistence.*;
+
 import java.util.Collection;
 
+@Entity
 public class Module{
-	private String code;
-	private String libelle;
-	private int hCoursPrev;
-	private int hCoursRea;
-	private int hTpPrev;
-	private int hTpRea;
-	private String discipline;
-	private int coefTest;
-	private int coefCc;
-	private Prof responsable;
-	private Module pere;
-	private Collection<Prof> specialistes;
-	
-	public Module() {
-	}
+    @Id
+    private String code;
 
-	public String getCode() {
-		return code;
-	}
+    private String libelle;
 
-	public int getCoefCc() {
-		return coefCc;
-	}
+    @Column(name = "H_COURS_PREV")
+    private int hCoursPrev;
+    @Column (name = "H_COURS_REA")
+    private int hCoursRea;
+    @Column (name = "H_TP_PREV")
+    private int hTpPrev;
+    @Column (name = "H_TP_REA")
+    private int hTpRea;
+    private String discipline;
+    @Column (name = "COEFF_TEST")
+    private int coefTest;
+    @Column (name = "COEFF_CC")
+    private int coefCc;
 
-	public int getCoefTest() {
-		return coefTest;
-	}
+    @ManyToOne
+    @JoinColumn (name = "RESP")
+    private Prof responsable;
+    @ManyToOne
+    @JoinColumn (name = "CODEPERE")
+    private Module pere;
+    @OneToMany (targetEntity = Prof.class, mappedBy = "matSpec")
+    private Collection<Prof> specialistes;
 
-	public String getDiscipline() {
-		return discipline;
-	}
+    @ManyToMany
+            (mappedBy="NOTATION")
+    private Collection<Etudiant> etudiants;
 
-	public int gethCoursPrev() {
-		return hCoursPrev;
-	}
+    public Module() {
+    }
 
-	public int gethCoursRea() {
-		return hCoursRea;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public int gethTpPrev() {
-		return hTpPrev;
-	}
+    public int getCoefCc() {
+        return coefCc;
+    }
 
-	public int gethTpRea() {
-		return hTpRea;
-	}
+    public int getCoefTest() {
+        return coefTest;
+    }
 
-	public String getLibelle() {
-		return libelle;
-	}
+    public String getDiscipline() {
+        return discipline;
+    }
 
-	public Module getPere() {
-		return pere;
-	}
+    public int gethCoursPrev() {
+        return hCoursPrev;
+    }
 
-	public Prof getResponsable() {
-		return responsable;
-	}
+    public int gethCoursRea() {
+        return hCoursRea;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public int gethTpPrev() {
+        return hTpPrev;
+    }
 
-	public void setCoefCc(int coefCc) {
-		this.coefCc = coefCc;
-	}
+    public int gethTpRea() {
+        return hTpRea;
+    }
 
-	public void setCoefTest(int coeffTest) {
-		this.coefTest = coeffTest;
-	}
+    public String getLibelle() {
+        return libelle;
+    }
 
-	public void setDiscipline(String discipline) {
-		this.discipline = discipline;
-	}
+    public Module getPere() {
+        return pere;
+    }
 
-	public void sethCoursPrev(int hCoursPrev) {
-		this.hCoursPrev = hCoursPrev;
-	}
+    public Prof getResponsable() {
+        return responsable;
+    }
 
-	public void sethCoursRea(int hCoursRea) {
-		this.hCoursRea = hCoursRea;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void sethTpPrev(int hTpPrev) {
-		this.hTpPrev = hTpPrev;
-	}
+    public void setCoefCc(int coefCc) {
+        this.coefCc = coefCc;
+    }
 
-	public void sethTpRea(int hTpRea) {
-		this.hTpRea = hTpRea;
-	}
+    public void setCoefTest(int coeffTest) {
+        this.coefTest = coeffTest;
+    }
 
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
+    public void setDiscipline(String discipline) {
+        this.discipline = discipline;
+    }
 
-	public void setPere(Module pere) {
-		this.pere = pere;
-	}
+    public void sethCoursPrev(int hCoursPrev) {
+        this.hCoursPrev = hCoursPrev;
+    }
 
-	public void setResponsable(Prof responsable) {
-		this.responsable = responsable;
-	}
+    public void sethCoursRea(int hCoursRea) {
+        this.hCoursRea = hCoursRea;
+    }
 
-	public Collection<Prof> getSpecialistes() {
-		return specialistes;
-	}
-	
-	@Override
-	public String toString() {
-		return "Module [" + (code != null ? "code=" + code + ", " : "")
-				+ (libelle != null ? "libelle=" + libelle + ", " : "")
-				+ "hCoursPrev=" + hCoursPrev + ", hCoursRea=" + hCoursRea
-				+ ", hTpPrev=" + hTpPrev + ", hTpRea=" + hTpRea + ", "
-				+ (discipline != null ? "discipline=" + discipline + ", " : "")
-				+ "coeffTest=" + coefTest + ", coefCc=" + coefCc + ", "
-				+ (responsable != null ? "responsable=" + responsable.getNomProf() + ", " : "")
-				+ (pere != null ? "pere=" + pere.getCode() : "") + "]";
-	}
+    public void sethTpPrev(int hTpPrev) {
+        this.hTpPrev = hTpPrev;
+    }
+
+    public void sethTpRea(int hTpRea) {
+        this.hTpRea = hTpRea;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public void setPere(Module pere) {
+        this.pere = pere;
+    }
+
+    public void setResponsable(Prof responsable) {
+        this.responsable = responsable;
+    }
+
+    public Collection<Prof> getSpecialistes() {
+        return specialistes;
+    }
+
+    @Override
+    public String toString() {
+        return "Module [" + (code != null ? "code=" + code + ", " : "")
+                + (libelle != null ? "libelle=" + libelle + ", " : "")
+                + "hCoursPrev=" + hCoursPrev + ", hCoursRea=" + hCoursRea
+                + ", hTpPrev=" + hTpPrev + ", hTpRea=" + hTpRea + ", "
+                + (discipline != null ? "discipline=" + discipline + ", " : "")
+                + "coeffTest=" + coefTest + ", coefCc=" + coefCc + ", "
+                + (responsable != null ? "responsable=" + responsable.getNomProf() + ", " : "")
+                + (pere != null ? "pere=" + pere.getCode() : "") + "]";
+    }
 }
